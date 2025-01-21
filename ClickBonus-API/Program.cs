@@ -1,4 +1,5 @@
 using ClickBonus_API.Context;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,13 @@ app.MapGet("/hello", () =>
 .WithTags("helloworld")
 .WithOpenApi();
 
+app.MapGet("/api/Usuarios", async ([FromServices] ClickBonusContext context) =>
+{
+    var usuarios = await context.Usuarios.ToListAsync();
+
+    return Results.Ok(usuarios);
+})
+.WithTags("Usuarios")
+.WithOpenApi();
+
 app.Run();
-
-

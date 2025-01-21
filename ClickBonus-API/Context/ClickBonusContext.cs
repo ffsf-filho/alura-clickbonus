@@ -15,9 +15,14 @@ public partial class ClickBonusContext : DbContext
     }
 
     public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Oferta> Ofertas { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Oferta>()
+            .Property(o => o.DataCriacao)
+            .HasDefaultValueSql("getdate()");
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
-
-   
 }
